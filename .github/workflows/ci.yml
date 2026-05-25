@@ -31,12 +31,13 @@ jobs:
           name: coverage
           path: coverage/
 
-      # secrets cannot be used in `if:` — requires SONAR_* repository secrets
+      # Requires SONAR_TOKEN + SONAR_HOST_URL repository secrets.
+      # SonarCloud: disable "Automatic Analysis" or CI scan will fail (see README).
       - name: SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        uses: SonarSource/sonarqube-scan-action@v4
+        uses: SonarSource/sonarqube-scan-action@v6
 
   e2e-robot:
     runs-on: ubuntu-latest

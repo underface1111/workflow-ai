@@ -97,6 +97,11 @@ workflow-ai/
 1. Tạo project trên [SonarCloud](https://sonarcloud.io) → import repo `underface1111/workflow-ai`
 2. Khớp **Organization key** và **Project key** với `sonar-project.properties` (`sonar.organization`, `sonar.projectKey`)
 3. Thêm secrets trên GitHub (không chỉ `.env`)
+4. **Tắt Automatic Analysis** trên SonarCloud (bắt buộc nếu dùng CI):
+   - Project → **Project Settings** → **Administration** → **Analysis Method**
+   - Tắt **Automatic Analysis** (chỉ giữ phân tích qua GitHub Actions)
+
+Nếu không tắt, CI báo lỗi: *"CI analysis while Automatic Analysis is enabled"*.
 
 ```bash
 npm run test:ci
