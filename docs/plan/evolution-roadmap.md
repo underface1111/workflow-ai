@@ -26,6 +26,7 @@ Các bước **cụ thể** mở rộng từ repo hiện tại — không gắn 
 | A3 | SonarCloud Quality Gate trên **new code** | Sonar UI |
 | A4 | (Tùy chọn) Nightly workflow full Robot | `.github/workflows/nightly-e2e.yml` |
 | A5 | Document runbook local | `scripts/test-local.ps1` ✅ |
+| A0 | Hướng dẫn branch protection | `docs/dev/branch-protection.md` ✅ |
 
 **Exit:** Mọi PR phải CI xanh + 1 approval mới merge.
 
