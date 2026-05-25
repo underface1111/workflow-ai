@@ -31,8 +31,8 @@ jobs:
           name: coverage
           path: coverage/
 
+      # secrets cannot be used in `if:` — requires SONAR_* repository secrets
       - name: SonarCloud Scan
-        if: ${{ secrets.SONAR_TOKEN != '' && secrets.SONAR_HOST_URL != '' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
