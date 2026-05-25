@@ -1,0 +1,11 @@
+node_modules/
+coverage/
+.env
+*.log
+.DS_Store
+report.html
+log.html
+output.xml
+__pycache__/
+.venv/
+robot-results/

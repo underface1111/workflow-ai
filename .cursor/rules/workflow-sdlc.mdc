@@ -1,0 +1,15 @@
+---
+description: GenAI SDLC guardrails for workflow-ai Node POC
+globs: src/**/*,tests/**/*
+---
+
+# workflow-ai coding rules
+
+- Stack: Node.js 20+, Express, Jest + supertest for unit tests.
+- Steel-thread API flow: POST /auth/login → GET /catalog → POST /cart/items → POST /checkout.
+- Always add or update unit tests in `tests/unit/` for behavior changes.
+- Do not commit secrets; use env vars for ports and URLs in tests only.
+- Match existing style: CommonJS, no TypeScript unless requested.
+- E2E: update Robot suites under `tests/e2e-robot/suites/critical/` with tag `critical` for PR scope.
+- Do not weaken `package.json` coverage thresholds or Sonar exclusions without team agreement.
+- Prefer small, focused PRs to support KPI merge in under one business day.

@@ -1,0 +1,50 @@
+{
+  "name": "workflow-ai-poc",
+  "version": "0.1.0",
+  "description": "Node.js POC for GenAI-integrated Development & Test workflow",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "jest --coverage",
+    "test:unit": "jest --testPathPattern=tests/unit",
+    "test:ci": "jest --coverage --ci",
+    "test:e2e": "robot --outputdir robot-results --include critical tests/e2e-robot/suites/critical",
+    "lint": "node -e \"console.log('Use SonarLint / SonarQube — see sonar-project.properties')\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": ["workflow", "sonar", "robot", "poc"],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": ["<rootDir>/tests/unit"],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/server.js"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["lcov", "text", "text-summary"],
+    "coverageThreshold": {
+      "global": {
+        "lines": 50,
+        "functions": 50,
+        "branches": 40,
+        "statements": 50
+      }
+    },
+    "reporters": [
+      "default",
+      ["jest-junit", { "outputDirectory": "coverage", "outputName": "junit.xml" }]
+    ]
+  }
+}

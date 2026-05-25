@@ -1,0 +1,99 @@
+# Azure DevOps pipeline template — Node POC
+# Link in ADO: New pipeline → existing YAML → path: .ado/pipelines/ci.yml
+
+trigger:
+  branches:
+    include:
+      - main
+      - master
+
+pr:
+  branches:
+    include:
+      - main
+      - master
+
+variables:
+  nodeVersion: "20.x"
+  baseUrl: "http://localhost:3000"
+
+stages:
+  - stage: Build_Test_Sonar
+    displayName: Build, unit tests, SonarQube
+    jobs:
+      - job: CI
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+            fetchDepth: 0
+
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(nodeVersion)
+
+          - script: npm ci
+            displayName: npm ci
+
+          - script: npm run test:ci
+            displayName: Unit tests + coverage
+
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: coverage/junit.xml
+              mergeTestResults: true
+            condition: succeededOrFailed()
+
+          - task: SonarQubePrepare@7
+            inputs:
+              SonarQube: SonarQubeServiceConnection
+              scannerMode: CLI
+              configMode: file
+              configFile: sonar-project.properties
+            displayName: SonarQube prepare
+
+          - task: SonarQubeAnalyze@7
+            displayName: SonarQube analyze
+
+          - task: SonarQubePublish@7
+            inputs:
+              pollingTimeoutSec: 300
+            displayName: SonarQube publish
+
+  - stage: E2E_Robot
+    displayName: Robot E2E critical
+    dependsOn: Build_Test_Sonar
+    jobs:
+      - job: RobotCritical
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(nodeVersion)
+
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: "3.12"
+
+          - script: |
+              npm ci
+              pip install -r tests/e2e-robot/requirements.txt
+              npm start &
+              for i in $(seq 1 30); do curl -sf $(baseUrl)/health && break; sleep 1; done
+              robot --outputdir $(Build.ArtifactStagingDirectory)/robot-results --include critical tests/e2e-robot/suites/critical
+            displayName: Run @critical Robot suites
+
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: JUnit
+              testResultsFiles: $(Build.ArtifactStagingDirectory)/robot-results/output.xml
+              mergeTestResults: true
+            condition: succeededOrFailed()
+
+          - publish: $(Build.ArtifactStagingDirectory)/robot-results
+            artifact: robot-results
+            condition: succeededOrFailed()
