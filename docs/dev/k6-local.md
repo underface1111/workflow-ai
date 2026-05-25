@@ -36,4 +36,6 @@ docker run --rm -e BASE_URL=http://host.docker.internal:3000 `
 Invoke-WebRequest http://localhost:3000/health -UseBasicParsing
 ```
 
-Exit: thresholds pass (`p(95)<500`, `http_req_failed<1%`).
+Exit: thresholds pass (`p(95)<500`, `http_req_failed<1%`, `checks>99%`).
+
+**Verified (Docker):** 2697 iterations, 0 failed requests, p(95) latency ~1.32ms, all checks 100%.

@@ -12,7 +12,7 @@ Các bước **cụ thể** mở rộng từ repo hiện tại — không gắn 
 - [x] GitHub Actions: unit → Sonar → Robot `@critical`
 - [x] k6 script (`perf/k6/steel_thread.js`)
 - [x] Branch protection + required status checks
-- [ ] k6 chạy local/Docker thành công — xem `docs/dev/k6-local.md` (cần cài k6 hoặc Docker)
+- [x] k6 chạy local/Docker thành công — `docs/dev/k6-local.md` (Docker + `steel_thread.js` ✅)
 - [x] PR học tập merge vào `main` (PR #1)
 
 ---
