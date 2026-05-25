@@ -14,6 +14,7 @@ cd tests/e2e-robot
 python -m venv .venv
 .venv\Scripts\activate          # Windows
 pip install -r requirements.txt
+# includes PyYAML for variables/env/*.yaml
 ```
 
 ## Run critical suites (PR scope)
