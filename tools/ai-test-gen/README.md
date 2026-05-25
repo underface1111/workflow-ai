@@ -25,8 +25,9 @@ ANTHROPIC_MODEL=claude-haiku-4-5
 ## Luồng đang dùng (tạm thời không có API key)
 
 ```bash
-npm run ai:test-gen           # template
-npm run ai:test-validate      # validate + npm test
+npm run ai:test-gen              # LEARN-001
+npm run ai:test-gen:learn-002    # LEARN-002
+npm run ai:test-validate         # validate + npm test
 ```
 
 CI cũng chỉ **validate + Jest** — không gọi LLM vì chưa cấu hình secret trên GitHub (có thể bật sau).
