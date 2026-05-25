@@ -50,10 +50,10 @@ Các bước **cụ thể** mở rộng từ repo hiện tại — không gắn 
 
 | ID | Việc | Deliverable |
 |----|------|-------------|
-| C1 | Prompt + schema cho patch `src/` (1 endpoint) | `tools/ai-code-gen/` |
-| C2 | Orchestrator Python (LangGraph hoặc script) | `orchestrator/` |
-| C3 | `workflow_dispatch` GHA gọi orchestrator | `.github/workflows/ai-pipeline.yml` |
-| C4 | Feature branch commit từ bot (không push main) | Git policy |
+| C1 | Prompt + schema cho patch `src/` (1 endpoint) | `tools/ai-code-gen/` ✅ |
+| C2 | Orchestrator Python (script) | `orchestrator/run_code_slice.py` ✅ |
+| C3 | `workflow_dispatch` GHA gọi orchestrator | `.github/workflows/ai-pipeline.yml` ✅ |
+| C4 | Feature branch + PR (không push main) | CONTRIBUTING ✅ |
 
 **Exit:** requirements.md → code diff trên branch → CI guardrails.
 

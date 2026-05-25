@@ -27,7 +27,7 @@ app.get('/', (_req, res) => {
 });
 
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', service: 'workflow-ai-poc' });
+  res.json({ status: 'ok', service: 'workflow-ai-poc', version: '0.2.0' });
 });
 
 app.post('/auth/login', (req, res) => {
