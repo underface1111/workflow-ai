@@ -6,6 +6,7 @@ Aligned with the BankCo **Development & Test** workflow (peer review, SonarQube,
 
 - Node.js 20+
 - npm
+- **SonarLint** in Cursor — see [docs/dev/sonarlint-cursor.md](docs/dev/sonarlint-cursor.md)
 - (E2E) Python 3.10+ and Robot Framework — see `tests/e2e-robot/README.md`
 - (Load) k6 — see `perf/k6/README.md`
 
@@ -18,6 +19,12 @@ npm test             # unit + coverage
 ```
 
 Demo credentials: `demo@bankco.local` / `demo123`
+
+## AI-generated unit tests (Bước B)
+
+- **Đang học:** `npm run ai:test-gen` (template) vì chưa có API key; sau này `npm run ai:test-gen:llm` (cùng validate).
+- Validate: `npm run ai:test-validate` — CI: validate + Jest (B4), chưa gọi LLM trên GitHub.
+- **Review diff before commit** (B5).
 
 ## Pull request checklist
 

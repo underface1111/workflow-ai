@@ -18,7 +18,14 @@ Caption from source slide: *GenAI integrated workflow across software developmen
 ### Plan
 
 - [how-to-build-workflow.md](plan/how-to-build-workflow.md) — **Cách xây từng lớp workflow** (học tập, không timeline)
+- [target-ai-orchestrator.md](plan/target-ai-orchestrator.md) — **To-Be:** AI Orchestrator + dual agent (mục tiêu)
+- [as-is-vs-to-be.md](plan/as-is-vs-to-be.md) — So sánh POC hiện tại vs kế hoạch AI
+- [evolution-roadmap.md](plan/evolution-roadmap.md) — Lộ trình POC → To-Be (bước A–F)
 - [implementation-plan.md](plan/implementation-plan.md) — Redirect (nội dung theo tuần đã gỡ)
+
+### Requirements (To-Be input)
+
+- [example-feature.md](requirements/example-feature.md) — Template ticket / requirements.md
 
 ### Architecture
 
@@ -33,6 +40,8 @@ Caption from source slide: *GenAI integrated workflow across software developmen
 
 ### Sequence diagrams
 
+- [as-is-poc-workflow.md](sequences/as-is-poc-workflow.md) — **As-Is** (CI + human PR)
+- [ai-orchestrator-to-be.md](sequences/ai-orchestrator-to-be.md) — **To-Be** (orchestrator + dual AI)
 - [pr-merge-happy-path.md](sequences/pr-merge-happy-path.md)
 - [robot-e2e.md](sequences/robot-e2e.md)
 - [load-testing.md](sequences/load-testing.md)

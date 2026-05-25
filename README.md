@@ -44,6 +44,19 @@ npm run test:e2e
 
 See [tests/e2e-robot/README.md](tests/e2e-robot/README.md).
 
+## AI Test Agent (Bước B)
+
+Tạm thời chưa có API key → dùng template; khi có key → `npm run ai:test-gen:llm`.
+
+```bash
+python -m pip install -r tools/ai-test-gen/requirements-validate.txt
+npm run ai:test-gen           # template (đang dùng)
+npm run ai:test-validate      # validate + npm test
+# npm run ai:test-gen:llm    # Claude — khi có ANTHROPIC_API_KEY trong .env
+```
+
+See [tools/ai-test-gen/README.md](tools/ai-test-gen/README.md).
+
 ## Load test (k6)
 
 ```bash
@@ -77,9 +90,11 @@ workflow-ai/
 
 ## Học workflow — đọc theo thứ tự
 
-1. [docs/plan/how-to-build-workflow.md](docs/plan/how-to-build-workflow.md) — **cách xây từng lớp** (không theo tuần)
-2. [docs/workflow/macro-workflow.md](docs/workflow/macro-workflow.md) — luồng tổng thể
-3. Chạy POC: `npm test` → PR → xem CI → (tùy chọn) Sonar + `npm run test:e2e`
+1. [docs/plan/how-to-build-workflow.md](docs/plan/how-to-build-workflow.md) — **As-Is:** cách xây từng lớp (POC hiện tại)
+2. [docs/plan/as-is-vs-to-be.md](docs/plan/as-is-vs-to-be.md) — so sánh với **AI Orchestrator (To-Be)**
+3. [docs/plan/evolution-roadmap.md](docs/plan/evolution-roadmap.md) — bước tiếp theo A→F
+4. [docs/workflow/macro-workflow.md](docs/workflow/macro-workflow.md) — luồng tổng thể
+5. Chạy POC: `npm test` → PR → CI → SonarLint + `npm run test:e2e`
 
 ## Documentation
 
@@ -88,6 +103,10 @@ workflow-ai/
 | [docs/README.md](docs/README.md) | Full documentation index |
 | [docs/plan/how-to-build-workflow.md](docs/plan/how-to-build-workflow.md) | Cách xây workflow (học tập) |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | PR checklist & GenAI rules |
+
+## SonarLint (Cursor)
+
+Cài extension **SonarLint** và bind SonarCloud project `workflow-ai-poc`: [docs/dev/sonarlint-cursor.md](docs/dev/sonarlint-cursor.md)
 
 ## SonarCloud
 

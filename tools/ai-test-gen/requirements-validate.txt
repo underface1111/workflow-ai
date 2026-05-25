@@ -1,0 +1,2 @@
+# Bước B4 — validate only (no LLM, no API keys)
+pydantic>=2.5.0
