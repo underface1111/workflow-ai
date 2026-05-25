@@ -48,8 +48,10 @@ See [tests/e2e-robot/README.md](tests/e2e-robot/README.md).
 
 ```bash
 python -m pip install -r tools/ai-test-gen/requirements.txt
-npm run ai:test-gen    # template, no API
-npm test               # includes tests/unit/generated/
+# .env: ANTHROPIC_API_KEY=...
+npm run ai:test-gen        # template, no API
+npm run ai:test-gen:llm    # Claude / Anthropic
+npm test
 ```
 
 See [tools/ai-test-gen/README.md](tools/ai-test-gen/README.md).

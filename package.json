@@ -11,6 +11,7 @@
     "test:ci": "jest --coverage --ci",
     "test:e2e": "robot --outputdir robot-results --include critical tests/e2e-robot/suites/critical",
     "ai:test-gen": "python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --template",
+    "ai:test-gen:llm": "python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --provider anthropic",
     "lint": "node -e \"console.log('Use SonarLint / SonarQube — see sonar-project.properties')\""
   },
   "engines": {

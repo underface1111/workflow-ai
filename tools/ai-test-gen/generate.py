@@ -4,7 +4,7 @@ AI Test Agent (Bước B) — generate Jest unit tests from requirements.md.
 
 Usage:
   python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --template
-  python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md  # needs OPENAI_API_KEY
+  python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --provider anthropic
 """
 
 from __future__ import annotations
@@ -21,6 +21,21 @@ from schemas import AgentResponse, GeneratedUnitTest
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REQUIREMENTS = REPO_ROOT / "docs/requirements/example-feature.md"
 OUTPUT_DIR = REPO_ROOT / "tests/unit/generated"
+
+
+def load_dotenv_local() -> None:
+    """Load repo .env into os.environ (does not override existing vars)."""
+    env_path = REPO_ROOT / ".env"
+    if not env_path.exists():
+        return
+    for line in env_path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        os.environ.setdefault(key, value)
 
 
 def read_requirements(path: Path) -> str:
@@ -73,7 +88,9 @@ STYLE EXAMPLE:
 {example}
 ```
 
-Respond with JSON only matching this shape:
+Import app from '../../../src/app' (file will live under tests/unit/generated/).
+
+Respond with JSON only (no markdown fences) matching this shape:
 {{
   "output_format": "json_schema_v1",
   "generated_test": {{
@@ -84,6 +101,38 @@ Respond with JSON only matching this shape:
   }}
 }}
 """
+
+
+def parse_json_response(raw: str) -> dict:
+    text = raw.strip()
+    fence = re.search(r"```(?:json)?\s*([\s\S]*?)```", text)
+    if fence:
+        text = fence.group(1).strip()
+    return json.loads(text)
+
+
+def call_anthropic(prompt: str) -> AgentResponse:
+    try:
+        import anthropic
+    except ImportError as e:
+        raise SystemExit("Install deps: pip install -r tools/ai-test-gen/requirements.txt") from e
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        raise SystemExit("ANTHROPIC_API_KEY not set. Use --template or add key to .env")
+
+    model = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
+    client = anthropic.Anthropic(api_key=api_key)
+    message = client.messages.create(
+        model=model,
+        max_tokens=4096,
+        system="You output only valid JSON for test generation. No explanation outside JSON.",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.2,
+    )
+    raw = message.content[0].text
+    data = parse_json_response(raw)
+    return AgentResponse.model_validate(data)
 
 
 def call_openai(prompt: str) -> AgentResponse:
@@ -116,6 +165,24 @@ def call_openai(prompt: str) -> AgentResponse:
     return AgentResponse.model_validate(data)
 
 
+def resolve_provider(explicit: str | None) -> str:
+    if explicit:
+        return explicit
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        return "anthropic"
+    if os.environ.get("OPENAI_API_KEY"):
+        return "openai"
+    return "anthropic"
+
+
+def call_llm(prompt: str, provider: str) -> AgentResponse:
+    if provider == "anthropic":
+        return call_anthropic(prompt)
+    if provider == "openai":
+        return call_openai(prompt)
+    raise SystemExit(f"Unknown provider: {provider}. Use anthropic or openai.")
+
+
 def write_output(generated: GeneratedUnitTest, dry_run: bool) -> Path:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     out_path = OUTPUT_DIR / generated.file_name
@@ -132,6 +199,8 @@ def write_output(generated: GeneratedUnitTest, dry_run: bool) -> Path:
 
 
 def main() -> int:
+    load_dotenv_local()
+
     parser = argparse.ArgumentParser(description="AI Test Agent — Bước B")
     parser.add_argument(
         "--requirements",
@@ -143,6 +212,12 @@ def main() -> int:
         "--template",
         action="store_true",
         help="Use built-in template (no API) for LEARN-001 / example-feature",
+    )
+    parser.add_argument(
+        "--provider",
+        choices=("anthropic", "openai"),
+        default=None,
+        help="LLM provider (default: anthropic if ANTHROPIC_API_KEY is set)",
     )
     parser.add_argument(
         "--dry-run",
@@ -165,12 +240,17 @@ def main() -> int:
         write_output(generated, args.dry_run)
         return 0
 
-    if not os.environ.get("OPENAI_API_KEY"):
-        print("Set OPENAI_API_KEY or use --template for example-feature.md", file=sys.stderr)
+    provider = resolve_provider(args.provider)
+    if provider == "anthropic" and not os.environ.get("ANTHROPIC_API_KEY"):
+        print("Set ANTHROPIC_API_KEY in .env or use --template", file=sys.stderr)
+        return 1
+    if provider == "openai" and not os.environ.get("OPENAI_API_KEY"):
+        print("Set OPENAI_API_KEY in .env or use --template", file=sys.stderr)
         return 1
 
     prompt = build_prompt(requirements)
-    agent = call_openai(prompt)
+    print(f"Calling {provider}...", file=sys.stderr)
+    agent = call_llm(prompt, provider)
     write_output(agent.generated_test, args.dry_run)
     return 0
 

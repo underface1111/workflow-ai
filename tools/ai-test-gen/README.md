@@ -8,13 +8,21 @@ Generate **Jest unit tests** from `docs/requirements/*.md` with **Pydantic** val
 python -m pip install -r tools/ai-test-gen/requirements.txt
 ```
 
-Optional in `.env` (local only, never commit):
+Local `.env` (repo root, **never commit**):
+
+```env
+ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_MODEL=claude-sonnet-4-20250514
+```
+
+Optional OpenAI instead:
 
 ```env
 OPENAI_API_KEY=sk-...
 OPENAI_MODEL=gpt-4o-mini
-# OPENAI_BASE_URL=https://...  # optional compatible API
 ```
+
+The script loads `.env` automatically if present.
 
 ## Usage
 
@@ -22,21 +30,40 @@ OPENAI_MODEL=gpt-4o-mini
 
 ```bash
 python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --template
+# or
+npm run ai:test-gen
 ```
 
-Writes `tests/unit/generated/learn-001-root.test.js`.
-
-### 2. LLM mode
+### 2. Claude / Anthropic (default when `ANTHROPIC_API_KEY` is set)
 
 ```bash
 python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md
+# explicit:
+python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --provider anthropic
+# or
+npm run ai:test-gen:llm
 ```
 
-### 3. Verify
+### 3. OpenAI
+
+```bash
+python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --provider openai
+```
+
+### 4. Verify
 
 ```bash
 npm test
 ```
+
+## Provider selection
+
+| Priority | Rule |
+|----------|------|
+| 1 | `--provider anthropic` or `openai` |
+| 2 | If only `ANTHROPIC_API_KEY` → **anthropic** |
+| 3 | If only `OPENAI_API_KEY` → **openai** |
+| 4 | Default → **anthropic** (error if key missing) |
 
 ## Review policy (B5)
 
@@ -50,5 +77,5 @@ JSON shape validated by `AgentResponse` / `GeneratedUnitTest` in `schemas.py` �
 
 ## Next (roadmap)
 
-- B4: optional CI job `workflow_dispatch` to run generator + `npm test`
+- B4: CI validate-only job (no API key on GitHub)
 - C: AI Code Agent for `src/` changes

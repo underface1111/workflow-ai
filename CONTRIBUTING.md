@@ -22,9 +22,9 @@ Demo credentials: `demo@bankco.local` / `demo123`
 
 ## AI-generated unit tests (Bước B)
 
-- Generator: `npm run ai:test-gen` or `python tools/ai-test-gen/generate.py --template`
+- Generator: `npm run ai:test-gen` (template) or `npm run ai:test-gen:llm` (Claude)
 - Output: `tests/unit/generated/*.test.js` — **review diff before commit**
-- LLM mode requires `OPENAI_API_KEY` in `.env` (never commit)
+- LLM mode: `ANTHROPIC_API_KEY` in `.env` (default) or `OPENAI_API_KEY` with `--provider openai` (never commit `.env`)
 
 ## Pull request checklist
 
