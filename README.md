@@ -77,9 +77,11 @@ workflow-ai/
 
 ## Học workflow — đọc theo thứ tự
 
-1. [docs/plan/how-to-build-workflow.md](docs/plan/how-to-build-workflow.md) — **cách xây từng lớp** (không theo tuần)
-2. [docs/workflow/macro-workflow.md](docs/workflow/macro-workflow.md) — luồng tổng thể
-3. Chạy POC: `npm test` → PR → xem CI → (tùy chọn) Sonar + `npm run test:e2e`
+1. [docs/plan/how-to-build-workflow.md](docs/plan/how-to-build-workflow.md) — **As-Is:** cách xây từng lớp (POC hiện tại)
+2. [docs/plan/as-is-vs-to-be.md](docs/plan/as-is-vs-to-be.md) — so sánh với **AI Orchestrator (To-Be)**
+3. [docs/plan/evolution-roadmap.md](docs/plan/evolution-roadmap.md) — bước tiếp theo A→F
+4. [docs/workflow/macro-workflow.md](docs/workflow/macro-workflow.md) — luồng tổng thể
+5. Chạy POC: `npm test` → PR → CI → SonarLint + `npm run test:e2e`
 
 ## Documentation
 
