@@ -1,82 +1,60 @@
 # AI Test Agent (Evolution roadmap — Bước B)
 
-Generate **Jest unit tests** from `docs/requirements/*.md` with **Pydantic** validation (`schemas.py`).
+Sinh **Jest unit tests** từ `docs/requirements/*.md`, validate bằng **Pydantic** (`schemas.py`).
+
+**Hiện tại (chưa có API key):** dùng `--template` + `validate.py`.  
+**Khi có key:** thêm bước LLM (Anthropic/OpenAI) — cùng schema, cùng validate.
 
 ## Setup
 
 ```bash
+# Đủ cho template + validate (không cần key)
+python -m pip install -r tools/ai-test-gen/requirements-validate.txt
+
+# Thêm khi dùng LLM
 python -m pip install -r tools/ai-test-gen/requirements.txt
 ```
 
-Local `.env` (repo root, **never commit**):
+`.env` (repo root, **không commit**):
 
 ```env
 ANTHROPIC_API_KEY=sk-ant-...
-# Default: cheapest Claude (Haiku 4.5). Alias: claude-haiku-4-5
 ANTHROPIC_MODEL=claude-haiku-4-5
 ```
 
-Optional OpenAI instead:
-
-```env
-OPENAI_API_KEY=sk-...
-OPENAI_MODEL=gpt-4o-mini
-```
-
-The script loads `.env` automatically if present.
-
-## Usage
-
-### 1. Template mode (no API) — `LEARN-001` / example-feature
+## Luồng đang dùng (tạm thời không có API key)
 
 ```bash
-python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --template
-# or
-npm run ai:test-gen
+npm run ai:test-gen           # template
+npm run ai:test-validate      # validate + npm test
 ```
 
-### 2. Claude / Anthropic (default when `ANTHROPIC_API_KEY` is set)
+CI cũng chỉ **validate + Jest** — không gọi LLM vì chưa cấu hình secret trên GitHub (có thể bật sau).
+
+## Khi đã có API key — LLM
 
 ```bash
-python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md
-# explicit:
-python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --provider anthropic
-# or
 npm run ai:test-gen:llm
+# hoặc
+python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --provider anthropic
+npm run ai:test-validate
 ```
 
-### 3. OpenAI
+| Provider | Env |
+|----------|-----|
+| Anthropic (mặc định) | `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL` |
+| OpenAI | `OPENAI_API_KEY`, `--provider openai` |
 
-```bash
-python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --provider openai
-```
+## Bước B4 — Validate (CI + local)
 
-### 4. Verify
-
-```bash
-npm test
-```
-
-## Provider selection
-
-| Priority | Rule |
-|----------|------|
-| 1 | `--provider anthropic` or `openai` |
-| 2 | If only `ANTHROPIC_API_KEY` → **anthropic** |
-| 3 | If only `OPENAI_API_KEY` → **openai** |
-| 4 | Default → **anthropic** (error if key missing) |
+- Header `AUTO-GENERATED`, `REVIEW REQUIRED`
+- Pydantic: Jest + supertest + import `src/app`
+- CI: `validate.py --skip-npm` → `npm run test:ci`
 
 ## Review policy (B5)
 
-- Files under `tests/unit/generated/` are **drafts** until a human reviews.
-- Header comment: `REVIEW REQUIRED before merge`.
-- Do not merge generated tests without reading diff.
+- Review diff trước merge `tests/unit/generated/*.test.js`
 
 ## Contract
 
-JSON shape validated by `AgentResponse` / `GeneratedUnitTest` in `schemas.py` — aligns with `example-feature.md` `json_schema_v1`.
-
-## Next (roadmap)
-
-- B4: CI validate-only job (no API key on GitHub)
-- C: AI Code Agent for `src/` changes
+`schemas.py` — `GeneratedUnitTest` / `json_schema_v1`

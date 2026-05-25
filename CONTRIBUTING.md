@@ -22,9 +22,9 @@ Demo credentials: `demo@bankco.local` / `demo123`
 
 ## AI-generated unit tests (Bước B)
 
-- Generator: `npm run ai:test-gen` (template) or `npm run ai:test-gen:llm` (Claude)
-- Output: `tests/unit/generated/*.test.js` — **review diff before commit**
-- LLM mode: `ANTHROPIC_API_KEY` in `.env` (default) or `OPENAI_API_KEY` with `--provider openai` (never commit `.env`)
+- **Đang học:** `npm run ai:test-gen` (template) vì chưa có API key; sau này `npm run ai:test-gen:llm` (cùng validate).
+- Validate: `npm run ai:test-validate` — CI: validate + Jest (B4), chưa gọi LLM trên GitHub.
+- **Review diff before commit** (B5).
 
 ## Pull request checklist
 

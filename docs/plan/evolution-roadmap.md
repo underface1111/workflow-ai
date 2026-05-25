@@ -38,7 +38,7 @@ Các bước **cụ thể** mở rộng từ repo hiện tại — không gắn 
 | B1 | Template requirements | `docs/requirements/example-feature.md` ✅ |
 | B2 | Script đọc requirements → LLM hoặc `--template` | `tools/ai-test-gen/` ✅ |
 | B3 | Pydantic validate output | `tools/ai-test-gen/schemas.py` ✅ |
-| B4 | CI job: chạy generated test + fail nếu invalid schema | GHA job (TODO) |
+| B4 | CI: validate generated tests (LLM tắt trên CI cho đến khi có secret) | `validate.py` + `ci.yml` ✅ |
 | B5 | Human review bắt buộc trước merge generated test | `tools/ai-test-gen/README.md` ✅ |
 
 **Exit:** Ticket mẫu → test file → CI pass — **chưa** sinh production code tự động.

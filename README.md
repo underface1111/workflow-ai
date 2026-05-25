@@ -46,12 +46,13 @@ See [tests/e2e-robot/README.md](tests/e2e-robot/README.md).
 
 ## AI Test Agent (Bước B)
 
+Tạm thời chưa có API key → dùng template; khi có key → `npm run ai:test-gen:llm`.
+
 ```bash
-python -m pip install -r tools/ai-test-gen/requirements.txt
-# .env: ANTHROPIC_API_KEY=...
-npm run ai:test-gen        # template, no API
-npm run ai:test-gen:llm    # Claude / Anthropic
-npm test
+python -m pip install -r tools/ai-test-gen/requirements-validate.txt
+npm run ai:test-gen           # template (đang dùng)
+npm run ai:test-validate      # validate + npm test
+# npm run ai:test-gen:llm    # Claude — khi có ANTHROPIC_API_KEY trong .env
 ```
 
 See [tools/ai-test-gen/README.md](tools/ai-test-gen/README.md).
