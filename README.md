@@ -89,6 +89,10 @@ workflow-ai/
 | [docs/plan/how-to-build-workflow.md](docs/plan/how-to-build-workflow.md) | Cách xây workflow (học tập) |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | PR checklist & GenAI rules |
 
+## SonarLint (Cursor)
+
+Cài extension **SonarLint** và bind SonarCloud project `workflow-ai-poc`: [docs/dev/sonarlint-cursor.md](docs/dev/sonarlint-cursor.md)
+
 ## SonarCloud
 
 | Nơi | Dùng cho |
