@@ -9,3 +9,4 @@ output.xml
 __pycache__/
 .venv/
 robot-results/
+robot-results-generated/

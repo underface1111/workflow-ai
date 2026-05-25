@@ -69,18 +69,23 @@ jobs:
       - name: Install Robot dependencies
         run: pip install -r tests/e2e-robot/requirements.txt
 
-      - name: Start API and run critical E2E
+      - name: Start API and run E2E (critical + generated)
         run: |
           npm start &
           for i in $(seq 1 30); do
             curl -sf http://localhost:3000/health && break
             sleep 1
           done
+          pip install -r tools/ai-robot-gen/requirements.txt
+          python tools/ai-robot-gen/validate.py --skip-robot
           robot --outputdir robot-results --include critical tests/e2e-robot/suites/critical
+          robot --outputdir robot-results-generated --include generated tests/e2e-robot/suites/generated
 
       - name: Publish Robot results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: robot-results
-          path: robot-results/
+          path: |
+            robot-results/
+            robot-results-generated/

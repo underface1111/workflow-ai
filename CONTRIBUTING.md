@@ -35,6 +35,15 @@ Demo credentials: `demo@bankco.local` / `demo123`
 
 See [tools/ai-code-gen/README.md](tools/ai-code-gen/README.md).
 
+## AI Robot E2E (Bước D)
+
+- Generate: `npm run ai:robot-gen:learn-004` → `tests/e2e-robot/suites/generated/*.robot`
+- Tags: **`generated`** only — không gắn tag `critical` lên suite AI
+- CI: `critical` (stable) rồi `generated` (riêng output `robot-results-generated/`)
+- **Review diff `.robot` trước merge** (D3)
+
+See [tools/ai-robot-gen/README.md](tools/ai-robot-gen/README.md).
+
 ## Pull request checklist
 
 - [ ] ADO work item linked in PR description

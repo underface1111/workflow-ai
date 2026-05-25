@@ -63,9 +63,9 @@ Các bước **cụ thể** mở rộng từ repo hiện tại — không gắn 
 
 | ID | Việc | Deliverable |
 |----|------|-------------|
-| D1 | Agent 2 đọc code → sinh `.robot` suite | `tests/e2e-robot/generated/` |
-| D2 | CI tách generated vs `critical` stable | Tags Robot |
-| D3 | QA review generated suites | CONTRIBUTING update |
+| D1 | Agent 2 đọc code → sinh `.robot` suite | `tests/e2e-robot/suites/generated/` ✅ |
+| D2 | CI tách generated vs `critical` stable | Tags + `ci.yml` ✅ |
+| D3 | QA review generated suites | CONTRIBUTING ✅ |
 
 ---
 
