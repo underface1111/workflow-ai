@@ -44,6 +44,16 @@ npm run test:e2e
 
 See [tests/e2e-robot/README.md](tests/e2e-robot/README.md).
 
+## AI Test Agent (Bước B)
+
+```bash
+python -m pip install -r tools/ai-test-gen/requirements.txt
+npm run ai:test-gen    # template, no API
+npm test               # includes tests/unit/generated/
+```
+
+See [tools/ai-test-gen/README.md](tools/ai-test-gen/README.md).
+
 ## Load test (k6)
 
 ```bash

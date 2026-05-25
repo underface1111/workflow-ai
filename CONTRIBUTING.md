@@ -20,6 +20,12 @@ npm test             # unit + coverage
 
 Demo credentials: `demo@bankco.local` / `demo123`
 
+## AI-generated unit tests (Bước B)
+
+- Generator: `npm run ai:test-gen` or `python tools/ai-test-gen/generate.py --template`
+- Output: `tests/unit/generated/*.test.js` — **review diff before commit**
+- LLM mode requires `OPENAI_API_KEY` in `.env` (never commit)
+
 ## Pull request checklist
 
 - [ ] ADO work item linked in PR description

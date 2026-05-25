@@ -36,10 +36,10 @@ Các bước **cụ thể** mở rộng từ repo hiện tại — không gắn 
 | ID | Việc | Deliverable |
 |----|------|-------------|
 | B1 | Template requirements | `docs/requirements/example-feature.md` ✅ |
-| B2 | Script đọc requirements → gọi LLM API → sinh **1** file `tests/unit/*.test.js` | `tools/ai-test-gen/` (future) |
-| B3 | Pydantic/Python hoặc Zod/JSON schema validate output | `tools/schemas/` |
-| B4 | CI job: chạy generated test + fail nếu invalid schema | GHA job |
-| B5 | Human review bắt buộc trước merge generated test | Process |
+| B2 | Script đọc requirements → LLM hoặc `--template` | `tools/ai-test-gen/` ✅ |
+| B3 | Pydantic validate output | `tools/ai-test-gen/schemas.py` ✅ |
+| B4 | CI job: chạy generated test + fail nếu invalid schema | GHA job (TODO) |
+| B5 | Human review bắt buộc trước merge generated test | `tools/ai-test-gen/README.md` ✅ |
 
 **Exit:** Ticket mẫu → test file → CI pass — **chưa** sinh production code tự động.
 

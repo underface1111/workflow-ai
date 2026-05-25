@@ -22,8 +22,12 @@ function requireAuth(req, res, next) {
   return next();
 }
 
+app.get('/', (_req, res) => {
+  res.json({ message: 'workflow-ai-poc', docs: '/health' });
+});
+
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', service: 'workflow-ai-pocs' });
+  res.json({ status: 'ok', service: 'workflow-ai-poc' });
 });
 
 app.post('/auth/login', (req, res) => {
