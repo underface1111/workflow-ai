@@ -2,7 +2,8 @@
 
 Node.js proof-of-concept for the **Development & Test** workflow: Express API, Jest unit tests, SonarQube, Robot Framework E2E (`@critical`), and k6 load script.
 
-**Repository:** [github.com/underface1111/workflow-ai](https://github.com/underface1111/workflow-ai)
+**Repository:** [github.com/underface1111/workflow-ai](https://github.com/underface1111/workflow-ai)  
+**CI:** [GitHub Actions](https://github.com/underface1111/workflow-ai/actions)
 
 ```bash
 git clone git@github.com:underface1111/workflow-ai.git
