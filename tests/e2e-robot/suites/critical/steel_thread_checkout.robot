@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation    Steel thread E2E (API): login → catalog → cart → checkout
 ...              Tags: critical — run on PR per ADR-03
+Library            Collections
 Resource           ../../resources/api_keywords.robot
 Variables          ../../variables/env/local.yaml
 Suite Setup        API Session Is Ready
@@ -16,7 +17,8 @@ Steel Thread Happy Path Checkout
     Login As Demo User
     ${catalog}=    Authorized GET    /catalog
     Length Should Be    ${catalog.json()}[items]    2
-    ${add}=    Authorized POST    /cart/items    {"skuId": "sku-2", "quantity": 1}    201
+    ${cart_payload}=    Create Dictionary    skuId=sku-2    quantity=${1}
+    ${add}=    Authorized POST    /cart/items    ${cart_payload}    201
     ${checkout}=    Authorized POST    /checkout
     Should Be Equal As Strings    ${checkout.json()}[status]    confirmed
     Should Match Regexp    ${checkout.json()}[orderId]    ^ord-
