@@ -10,3 +10,6 @@ __pycache__/
 .venv/
 robot-results/
 robot-results-generated/
+orchestrator/out/*
+!orchestrator/out/.gitkeep
+orchestrator/in/sonar-hints.json

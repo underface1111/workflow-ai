@@ -23,6 +23,7 @@
     "ai:code-gen:learn-003": "python tools/ai-code-gen/generate.py --requirements docs/requirements/learn-003-health-version.md --template",
     "ai:code-validate": "python tools/ai-code-gen/validate.py --ticket learn-003",
     "ai:code-slice": "python orchestrator/run_code_slice.py learn-003",
+    "ai:release-pipeline": "python orchestrator/run_release_pipeline.py",
     "lint": "node -e \"console.log('Use SonarLint / SonarQube — see sonar-project.properties')\""
   },
   "engines": {

@@ -1,0 +1,69 @@
+# Bước E — test, self-heal, optional PR (no auto-merge)
+name: Release Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Feature branch name (must exist on origin)
+        required: true
+        type: string
+      ticket:
+        description: Ticket id for PR title/body
+        required: true
+        default: learn-005
+        type: string
+      create_pr:
+        description: Open PR and @mentor comment when tests pass
+        required: true
+        default: false
+        type: boolean
+      mentor:
+        description: GitHub login to @mention
+        required: true
+        default: mentor
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install and run release pipeline
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          MENTOR_GITHUB_LOGIN: ${{ inputs.mentor }}
+        run: |
+          npm ci
+          pip install -r tools/ai-code-gen/requirements-validate.txt
+          ARGS="--branch ${{ inputs.branch }} --ticket ${{ inputs.ticket }}"
+          if [ "${{ inputs.create_pr }}" != "true" ]; then
+            ARGS="$ARGS --skip-pr"
+          fi
+          python orchestrator/run_release_pipeline.py $ARGS
+
+      - name: Upload metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-metrics
+          path: orchestrator/out/
+          if-no-files-found: ignore

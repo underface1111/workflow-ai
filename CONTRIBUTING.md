@@ -44,6 +44,15 @@ See [tools/ai-code-gen/README.md](tools/ai-code-gen/README.md).
 
 See [tools/ai-robot-gen/README.md](tools/ai-robot-gen/README.md).
 
+## Release pipeline (Bước E)
+
+- `npm run ai:release-pipeline -- --branch <feature-branch> --ticket learn-005`
+- Cần `GITHUB_TOKEN` để tạo PR; `MENTOR_GITHUB_LOGIN` cho @mention
+- **Không auto-merge** — human review + CI required checks
+- Actions: **Release Pipeline** (`workflow_dispatch`)
+
+See [docs/dev/release-pipeline.md](docs/dev/release-pipeline.md).
+
 ## Pull request checklist
 
 - [ ] ADO work item linked in PR description

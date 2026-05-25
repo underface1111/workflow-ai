@@ -73,10 +73,10 @@ Các bước **cụ thể** mở rộng từ repo hiện tại — không gắn 
 
 | ID | Việc | Deliverable |
 |----|------|-------------|
-| E1 | `gh pr create` khi Sonar + test pass | Orchestrator step |
-| E2 | Comment tag `@mentor` / team | GitHub API |
-| E3 | Self-heal: parse Sonar + JUnit log → prompt fix (max 3) | Orchestrator loop |
-| E4 | Metrics export PR cycle time | Optional workflow |
+| E1 | `gh pr create` khi test pass | `run_release_pipeline.py` + `github_api.py` ✅ |
+| E2 | Comment tag `@mentor` / team | GitHub API comment ✅ |
+| E3 | Self-heal: JUnit + hints → template fix (max 3) | `self_heal.py` ✅ |
+| E4 | Metrics export PR cycle time | `orchestrator/out/metrics-*.json` ✅ |
 
 **Exit:** Ticket → branch → guardrails → PR sẵn review — **không** auto-merge.
 

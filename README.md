@@ -76,6 +76,14 @@ npm run test:e2e:generated   # npm start trước
 
 See [tools/ai-robot-gen/README.md](tools/ai-robot-gen/README.md).
 
+## Release pipeline (Bước E)
+
+```bash
+npm run ai:release-pipeline -- --branch feature/my-branch --ticket learn-005 --dry-run
+```
+
+See [docs/dev/release-pipeline.md](docs/dev/release-pipeline.md).
+
 ## Load test (k6)
 
 ```bash

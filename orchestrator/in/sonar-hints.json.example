@@ -1,0 +1,5 @@
+{
+  "hints": [
+    "Add version field to health endpoint response"
+  ]
+}
