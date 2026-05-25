@@ -17,11 +17,19 @@ pip install -r requirements.txt
 # includes PyYAML for variables/env/*.yaml
 ```
 
-## Run critical suites (PR scope)
+## Run critical suites (PR scope — stable)
 
 ```bash
 robot --outputdir ../../robot-results --include critical suites/critical
 ```
+
+## Run generated suites (Bước D — AI, tag `generated`)
+
+```bash
+robot --outputdir ../../robot-results-generated --include generated suites/generated
+```
+
+From repo root: `npm run test:e2e:generated`
 
 ## Run from repo root (helper)
 

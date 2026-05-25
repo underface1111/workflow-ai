@@ -66,6 +66,16 @@ npm run ai:code-slice    # LEARN-003: /health version field
 
 See [tools/ai-code-gen/README.md](tools/ai-code-gen/README.md).
 
+## AI Robot E2E (Bước D)
+
+```bash
+python -m pip install -r tools/ai-robot-gen/requirements.txt
+npm run ai:robot-slice
+npm run test:e2e:generated   # npm start trước
+```
+
+See [tools/ai-robot-gen/README.md](tools/ai-robot-gen/README.md).
+
 ## Load test (k6)
 
 ```bash
