@@ -13,7 +13,7 @@ Các bước **cụ thể** mở rộng từ repo hiện tại — không gắn 
 - [x] k6 script (`perf/k6/steel_thread.js`)
 - [x] Branch protection + required status checks
 - [x] k6 chạy local/Docker thành công — `docs/dev/k6-local.md` (Docker + `steel_thread.js` ✅)
-- [x] PR học tập merge vào `main` (PR #1)
+- [x] PR học tập merge vào `main` (PR #1 LEARN-001, PR #2 LEARN-002)
 
 ---
 
