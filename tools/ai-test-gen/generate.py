@@ -121,7 +121,7 @@ def call_anthropic(prompt: str) -> AgentResponse:
     if not api_key:
         raise SystemExit("ANTHROPIC_API_KEY not set. Use --template or add key to .env")
 
-    model = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
+    model = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5")
     client = anthropic.Anthropic(api_key=api_key)
     message = client.messages.create(
         model=model,

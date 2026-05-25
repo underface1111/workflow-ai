@@ -12,7 +12,8 @@ Local `.env` (repo root, **never commit**):
 
 ```env
 ANTHROPIC_API_KEY=sk-ant-...
-ANTHROPIC_MODEL=claude-sonnet-4-20250514
+# Default: cheapest Claude (Haiku 4.5). Alias: claude-haiku-4-5
+ANTHROPIC_MODEL=claude-haiku-4-5
 ```
 
 Optional OpenAI instead:
