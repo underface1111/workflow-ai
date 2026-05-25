@@ -86,11 +86,20 @@ workflow-ai/
 | [docs/plan/how-to-build-workflow.md](docs/plan/how-to-build-workflow.md) | Cách xây workflow (học tập) |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | PR checklist & GenAI rules |
 
-## SonarQube (local)
+## SonarCloud
+
+| Nơi | Dùng cho |
+|-----|----------|
+| **GitHub Secrets** `SONAR_TOKEN`, `SONAR_HOST_URL` | CI trên mỗi PR/push (bắt buộc để scan chạy) |
+| File `.env` (local, không commit) | Chỉ khi chạy `sonar-scanner` trên máy |
+
+1. Tạo project trên [SonarCloud](https://sonarcloud.io) → import repo `underface1111/workflow-ai`
+2. Khớp **Organization key** và **Project key** với `sonar-project.properties` (`sonar.organization`, `sonar.projectKey`)
+3. Thêm secrets trên GitHub (không chỉ `.env`)
 
 ```bash
 npm run test:ci
-# sonar-scanner -Dsonar.host.url=... -Dsonar.token=...
+# npx sonar-scanner   # cần sonar-scanner CLI + .env local
 ```
 
-Coverage report: `coverage/lcov.info`
+Coverage: `coverage/lcov.info`
