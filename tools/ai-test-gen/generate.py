@@ -47,6 +47,28 @@ def extract_ticket_id(content: str) -> str:
     return match.group(1).lower() if match else "ticket-unknown"
 
 
+def template_for_learn_002() -> GeneratedUnitTest:
+    """Deterministic output for learn-002-health (no API)."""
+    content = """const request = require('supertest');
+const app = require('../../../src/app');
+
+describe('GET /health (LEARN-002)', () => {
+  it('returns ok status without auth', async () => {
+    const res = await request(app).get('/health');
+    expect(res.status).toBe(200);
+    expect(res.body.status).toBe('ok');
+    expect(res.body.service).toBe('workflow-ai-poc');
+  });
+});
+"""
+    return GeneratedUnitTest(
+        ticket_id="learn-002",
+        file_name="learn-002-health.test.js",
+        file_content=content,
+        summary="Happy path for GET /health monitoring endpoint.",
+    )
+
+
 def template_for_learn_001() -> GeneratedUnitTest:
     """Deterministic output for example-feature (no API). Review before commit."""
     content = """const request = require('supertest');
@@ -234,9 +256,19 @@ def main() -> int:
     requirements = read_requirements(req_path)
 
     if args.template:
-        if extract_ticket_id(requirements) != "learn-001":
-            print("Warning: --template only ships LEARN-001; using that template.", file=sys.stderr)
-        generated = template_for_learn_001()
+        ticket = extract_ticket_id(requirements)
+        templates = {
+            "learn-001": template_for_learn_001,
+            "learn-002": template_for_learn_002,
+        }
+        factory = templates.get(ticket)
+        if not factory:
+            print(
+                f"Warning: no --template for {ticket}; supported: {', '.join(templates)}",
+                file=sys.stderr,
+            )
+            factory = template_for_learn_001
+        generated = factory()
         write_output(generated, args.dry_run)
         return 0
 

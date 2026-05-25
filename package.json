@@ -11,6 +11,7 @@
     "test:ci": "jest --coverage --ci",
     "test:e2e": "robot --outputdir robot-results --include critical tests/e2e-robot/suites/critical",
     "ai:test-gen": "python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --template",
+    "ai:test-gen:learn-002": "python tools/ai-test-gen/generate.py --requirements docs/requirements/learn-002-health.md --template",
     "ai:test-gen:llm": "python tools/ai-test-gen/generate.py --requirements docs/requirements/example-feature.md --provider anthropic",
     "ai:test-validate": "python tools/ai-test-gen/validate.py",
     "ai:test-validate:only": "python tools/ai-test-gen/validate.py --skip-npm",
