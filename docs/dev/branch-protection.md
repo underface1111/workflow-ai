@@ -2,7 +2,7 @@
 
 Làm trên GitHub sau khi PR `learn/practice` → `main` CI xanh.
 
-## A1 — Branch protection
+## A1 — Branch protection.
 
 1. Repo **Settings** → **Branches** → **Add branch protection rule**
 2. Branch name pattern: `main`
