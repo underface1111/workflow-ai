@@ -26,6 +26,15 @@ Demo credentials: `demo@bankco.local` / `demo123`
 - Validate: `npm run ai:test-validate` — CI: validate + Jest (B4), chưa gọi LLM trên GitHub.
 - **Review diff before commit** (B5).
 
+## AI Code Agent (Bước C)
+
+- Requirements → patch: `npm run ai:code-gen:learn-003` hoặc `npm run ai:code-slice`
+- Validate: `npm run ai:code-validate`
+- **Luôn dùng feature branch + PR** — không push thẳng `main` (C4)
+- Manual CI: Actions → **AI Pipeline** → `learn-003` (template, không commit trên runner)
+
+See [tools/ai-code-gen/README.md](tools/ai-code-gen/README.md).
+
 ## Pull request checklist
 
 - [ ] ADO work item linked in PR description

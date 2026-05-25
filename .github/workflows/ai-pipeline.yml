@@ -1,0 +1,42 @@
+# Bước C3 — manual AI code slice (template only, no secrets)
+name: AI Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      ticket:
+        description: Ticket id (e.g. learn-003)
+        required: true
+        default: learn-003
+        type: choice
+        options:
+          - learn-003
+
+jobs:
+  ai-code-slice:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          pip install -r tools/ai-code-gen/requirements.txt
+
+      - name: Run orchestrator (template)
+        run: python orchestrator/run_code_slice.py ${{ inputs.ticket }}
+
+      - name: Show diff (review artifact)
+        if: always()
+        run: git diff --stat
+
+      # Does not commit — human opens PR from local branch after review.

@@ -57,6 +57,15 @@ npm run ai:test-validate      # validate + npm test
 
 See [tools/ai-test-gen/README.md](tools/ai-test-gen/README.md).
 
+## AI Code Agent (Bước C)
+
+```bash
+python -m pip install -r tools/ai-code-gen/requirements.txt
+npm run ai:code-slice    # LEARN-003: /health version field
+```
+
+See [tools/ai-code-gen/README.md](tools/ai-code-gen/README.md).
+
 ## Load test (k6)
 
 ```bash
